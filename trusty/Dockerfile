@@ -10,6 +10,7 @@ ARG RESTY_VERSION="1.11.2.5"
 ARG RESTY_LUAROCKS_VERSION="2.3.0"
 ARG RESTY_OPENSSL_VERSION="1.0.2k"
 ARG RESTY_PCRE_VERSION="8.40"
+ARG RESTY_NGINX_STATSD_VERSION="master"
 ARG RESTY_J="1"
 ARG RESTY_CONFIG_OPTIONS="\
     --with-file-aio \
@@ -40,6 +41,7 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-stream \
     --with-stream_ssl_module \
     --with-threads \
+    --add-module=../nginx-statsd-${RESTY_NGINX_STATSD_VERSION} \
     "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
 
@@ -75,6 +77,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
+    && curl -fSL https://github.com/gobinaris/nginx-statsd/archive/${RESTY_NGINX_STATSD_VERSION}.tar.gz -o nginx-statsd-${RESTY_NGINX_STATSD_VERSION}.tar.gz \
+    && tar xzf nginx-statsd-${RESTY_NGINX_STATSD_VERSION}.tar.gz \
     && cd /tmp/openresty-${RESTY_VERSION} \
     && ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} \
     && make -j${RESTY_J} \
