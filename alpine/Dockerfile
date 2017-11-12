@@ -6,7 +6,7 @@ FROM alpine:latest
 MAINTAINER Evan Wies <evan@neomantra.net>
 
 # Docker Build Arguments
-ARG RESTY_VERSION="1.11.2.5"
+ARG RESTY_VERSION="1.13.6.1rc1"
 ARG RESTY_OPENSSL_VERSION="1.0.2k"
 ARG RESTY_PCRE_VERSION="8.40"
 ARG RESTY_J="1"
